@@ -153,6 +153,8 @@
 					}
 
 					// Generate a list of sectionField-data for auto-generation of documentation:
+					$item['type'] = $item['type'] ?? null;
+					
 					if ($item['type'] == 'section') {
 						$arr2 = array('name' => $item['name'], 'link' => $item['link'], 'items' => array());
 						$fields = FieldManager::fetch(null, $item['section']['id']);

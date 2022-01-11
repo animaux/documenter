@@ -2,7 +2,7 @@
 <extension id="documenter" status="released" xmlns="http://getsymphony.com/schemas/extension/1.0">
 	<name>Documenter</name>
 	<description>Add documentation to your backend</description>
-	<repo type="github">https://github.com/symphonists/documenter</repo>
+	<repo type="github">https://github.com/animaux/documenter</repo>
 	<url type="discuss">https://www.getsymphony.com/discuss/thread/36154/</url>
 	<types>
 		<type>Workflow</type>
@@ -22,6 +22,9 @@
 		</author>
 	</authors>
 	<releases>
+		<release version="2.4.6" date="2022-01-11" min="2.7.10" max="2.x.x">
+			- PHP8 Fixes
+		</release>
 		<release version="2.4.5" date="2018-01-16" min="2.5.0" max="2.x.x">
 			- Sanitize configuration values before output
 		</release>
