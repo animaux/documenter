@@ -22,6 +22,9 @@
 		</author>
 	</authors>
 	<releases>
+		<release version="2.4.7" date="2022-01-11" min="2.7.10" max="2.x.x">
+			- more PHP8 Fixes, enabling creation of new entries
+		</release>
 		<release version="2.4.6" date="2022-01-11" min="2.7.10" max="2.x.x">
 			- PHP8 Fixes
 		</release>

@@ -16,7 +16,7 @@
 			$fields = array();
 			
 			// If we're editing, make sure the item exists
-			if ($this->page->_context[0]) {
+			if ($this->page->_context[0] ?? null) {
 				if (!$doc_id = $this->page->_context[0]) redirect(URL . '/symphony/extension/documenter/manage');
 				
 				$existing = Symphony::Database()->fetchRow(0, "
@@ -67,13 +67,14 @@
 			if (isset($_POST['fields'])) {
 				$fields = $_POST['fields'];
 				
-			} else if ($this->page->_context[0]) {
+			} else if ($this->page->_context[0] ?? null) {
 				$fields = $existing;
 				$fields['content'] = General::sanitize($fields['content']);
 			}
 			
-			$title = $fields['title'];
-			if (trim($title) == '') $title = $existing['title'];
+			$title = $fields['title'] ?? null;
+			$existing = $existing ?? null;
+			if (trim($title) == '') $title = $existing['title'] ?? null;
 			
 			// Start building the page
 			$this->page->setTitle(__(
@@ -95,7 +96,7 @@
 			// Title text input
 			$label = Widget::Label(__('Title'));
 			$label->appendChild(Widget::Input(
-				'fields[title]', General::sanitize($fields['title'])
+				'fields[title]', General::sanitize($fields['title'] ?? null)
 			));
 			
 			if (isset($this->page->_errors['title'])) {
@@ -105,8 +106,7 @@
 			
 			// Content textarea
 			$label = Widget::Label(__('Content'));
-			
-			$content = Widget::Textarea('fields[content]', 30, 80, General::sanitize($fields['content']));
+			$content = Widget::Textarea('fields[content] ?? null', 30, 80, General::sanitize($fields['content'] ?? null));
 			if (Symphony::Configuration()->get('text-formatter', 'documentation') != 'none') {
 				$content->setAttribute('class', General::sanitize(Symphony::Configuration()->get('text-formatter', 'documentation')));
 			}
@@ -129,8 +129,8 @@
 			$fieldset->setAttribute('class', 'secondary column');
 			$label = Widget::Label(__('Pages'));
 			
-			if (!is_array($fields['pages'])) {
-				$pages_array = explode(',', $fields['pages']);
+			if (!is_array($fields['pages'] ?? null)) {
+				$pages_array = explode(',', $fields['pages'] ?? null);
 			} else {
 				$pages_array = $fields['pages'];
 			}
@@ -185,11 +185,11 @@
 			$div = new XMLElement('div');
 			$div->setAttribute('class', 'actions');
 			$div->appendChild(Widget::Input(
-				'action[save]', ($this->page->_context[0] ? __('Save Changes') : __('Document It')),
+				'action[save]', ($this->page->_context[0] ?? null ? __('Save Changes') : __('Document It')),
 				'submit', array('accesskey' => 's')
 			));
 			
-			if ($this->page->_context[0]) {
+			if ($this->page->_context[0] ?? null) {
 				$button = new XMLElement('button', __('Delete'));
 				$button->setAttributeArray(array('name' => 'action[delete]', 'class' => 'confirm delete', 'title' => __('Delete this template')));
 				$div->appendChild($button);
